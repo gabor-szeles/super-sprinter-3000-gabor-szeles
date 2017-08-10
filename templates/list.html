@@ -21,7 +21,7 @@
     {% for list in database %}
         <tr>
             {% for item in list %}
-            <td style="width: 70px">{{ item }}</td>
+            <td style="width: 90px">{{ item }}</td>
             {% endfor %}
             <td><form action="{{ url_for('route_update', story_id=list[0] ) }}">
                 <button type="Submit"><img src="/static/pen.png" /></button>

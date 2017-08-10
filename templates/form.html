@@ -31,7 +31,13 @@
                 <option>Review</option>
                 <option>Done</option>
             </select>
+            {% if update is not none %}
+            </form>
+            <form><form action="{{ url_for('route_save_update', story_id=id ) }}" method="post">
+                <button type="Submit">Update</button></form>
+            {% else %}
             <br /><button type="Submit">Create</button>
-        </form>
+            </form>
+            {% endif %}
     </body>
 </html>

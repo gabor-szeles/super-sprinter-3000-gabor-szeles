@@ -7,9 +7,6 @@ app = Flask(__name__)
 @app.route('/')
 def route_index():
     database = read_database("database.csv")
-    url_list = []
-    for data in database:
-        url_list.append(data[0])
     return render_template("list.html", database=database)
 
 
@@ -23,13 +20,14 @@ def route_edit():
 def route_update(story_id):
     update = 1
     database = read_database("database.csv")
+    id_ = database[int(story_id)-1][0]
     title = database[int(story_id)-1][1]
     story = database[int(story_id)-1][2]
     criteria = database[int(story_id)-1][3]
     value = database[int(story_id)-1][4]
     estimation = database[int(story_id)-1][5]
     status = database[int(story_id)-1][6]
-    return render_template('form.html', title=title, story=story, criteria=criteria, value=value, estimation=estimation, status=status, update=update)
+    return render_template('form.html', database=database, id=id_, title=title, story=story, criteria=criteria, value=value, estimation=estimation, status=status, update=update)
 
 
 @app.route('/save-story', methods=['POST'])
@@ -57,6 +55,25 @@ def route_delete(story_id):
     for lists in database:
         if lists[0] == story_id:
             database.remove(lists)
+    export_data("database.csv", database)
+    return redirect('/')
+
+
+@app.route('/update-story/<story_id>', methods=['POST'])
+def route_save_update(story_id):
+    database = read_database("database.csv")
+    user_story = []
+    user_story.append(story_id)
+    user_story.append(request.form["title"])
+    user_story.append(request.form["story"])
+    user_story.append(request.form["criteria"])
+    user_story.append(request.form["value"])
+    user_story.append(request.form["estimation"])
+    user_story.append(request.form["status"])
+    for lists in database:
+        if lists[0] == story_id:
+            database.remove(lists)
+    database.append(user_story)
     export_data("database.csv", database)
     return redirect('/')
 
