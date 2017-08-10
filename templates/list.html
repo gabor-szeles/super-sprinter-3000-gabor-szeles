@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>User story manager</title>
+</head>
+<body>
+    <h1>User story manager</h1>
+    <form action="/story">
+    <br /><button type="Submit">Add new user story</button></form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Story Title</th>
+            <th>User Story</th>
+            <th>Acceptance Criteria</th>
+            <th>Business Value</th>
+            <th>Estimation</th>
+            <th>Status</th>
+        </tr>
+    {% for list in database %}
+        <tr>
+            {% for item in list %}
+            <td style="width: 70px">{{ item }}</td>
+            {% endfor %}
+            <td><a href="{{ url_for('route_update', story_id=list[0] ) }}"><img src="/images/pen.png" /></a></td>
+        </tr>
+    {% endfor %}
+    </table>
+</body>
+</html>
