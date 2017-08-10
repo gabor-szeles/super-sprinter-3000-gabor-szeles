@@ -47,9 +47,17 @@ def route_save():
     user_story.append(request.form["estimation"])
     user_story.append(request.form["status"])
     database.append(user_story)
-    with open("database.csv", "w") as data:
-        writer = csv.writer(data)
-        writer.writerows(database)
+    export_data("database.csv", database)
+    return redirect('/')
+
+
+@app.route('/delete/<story_id>', methods=['POST'])
+def route_delete(story_id):
+    database = read_database("database.csv")
+    for lists in database:
+        if lists[0] == story_id:
+            database.remove(lists)
+    export_data("database.csv", database)
     return redirect('/')
 
 
@@ -57,6 +65,12 @@ def read_database(datafile):
     with open(datafile, "r") as database:
         table = list(list(row) for row in csv.reader(database, delimiter=','))
     return table
+
+
+def export_data(export_file, database):
+    with open(export_file, "w") as data:
+        writer = csv.writer(data)
+        writer.writerows(database)
 
 
 app.secret_key = "you!never!guess!this"
