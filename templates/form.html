@@ -7,10 +7,11 @@
     <body>
         {% if update is not none %}
         <h1>User story manager - Edit Story</h1>
+        <form action="{{ url_for('route_save_update', story_id=id ) }}" method="post">
         {% else %}
         <h1>User story manager - Add New Story</h1>
-        {% endif %}
         <form action="/save-story" method="post">
+        {% endif %}
             <p>Story title</p>
             <input name="title" value={{title}}>
             <p>User story</p>
@@ -32,12 +33,10 @@
                 <option>Done</option>
             </select>
             {% if update is not none %}
-            </form>
-            <form><form action="{{ url_for('route_save_update', story_id=id ) }}" method="post">
-                <button type="Submit">Update</button></form>
+            <br /><button type="Submit">Update</button>
             {% else %}
             <br /><button type="Submit">Create</button>
-            </form>
             {% endif %}
+            </form>
     </body>
 </html>
