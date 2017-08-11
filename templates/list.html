@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="/static/style.css">
     <title>User story manager</title>
 </head>
 <body>
@@ -15,13 +16,13 @@
             <th>User Story</th>
             <th>Acceptance Criteria</th>
             <th>Business Value</th>
-            <th>Estimation</th>
+            <th>Estimation (hr)</th>
             <th>Status</th>
         </tr>
     {% for list in database %}
         <tr>
             {% for item in list %}
-            <td style="width: 90px">{{ item }}</td>
+            <td>{{ item }}</td>
             {% endfor %}
             <td><form action="{{ url_for('route_update', story_id=list[0] ) }}">
                 <button type="Submit"><img src="/static/pen.png" /></button>
